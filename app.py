@@ -16,7 +16,7 @@ if uploaded_file is not None:
     # Data processing (same as your original code)
     df1 = df.iloc[:, 6:]
     df2 = df1.iloc[:, [0, 1, 4, 6, 17]]
-    df2 = df2[df2.위탁량 > 0]
+    df2 = df2[df2.위탁량 > 0].reset_index(drop=True)
     df2['배출차량'] = df2.iloc[:, 3].str.replace(r'^.*(.{4})$', r'\1', regex=True)
     df2['배출차량'] = pd.to_numeric(df2['배출차량'], errors='coerce')
     df2['인계일자'] = df2['인계일자'].apply(lambda x: x.replace(year=1900, month=1))
@@ -52,7 +52,7 @@ if uploaded_file is not None:
     st.subheader("Filter by Company Name")
     company_options = df2['업체명'].unique().tolist()
     selected_company = st.multiselect("Select company names", company_options, default=company_options)
-    filtered_df = df2[df2['업체명'].isin(selected_company)]
+    filtered_df = df2[df2['업체명'].isin(selected_company)].reset_index(drop=True)
 
     # Display filtered data
     st.subheader("Filtered Data")
