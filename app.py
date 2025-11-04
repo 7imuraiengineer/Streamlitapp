@@ -18,6 +18,7 @@ if uploaded_file is not None:
     df2 = df1.iloc[:, [0, 1, 4, 6, 17]]
     df2 = df2[df2.위탁량 > 0]
     df2 = df2.reset_index(drop=True)
+    df2 = df2.index + 1
     df2['배출차량'] = df2.iloc[:, 3].str.replace(r'^.*(.{4})$', r'\1', regex=True)
     df2['배출차량'] = pd.to_numeric(df2['배출차량'], errors='coerce')
     df2['인계일자'] = df2['인계일자'].apply(lambda x: x.replace(year=1900, month=1))
