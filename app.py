@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 from datetime import date, timedelta
 import io
+import win32com.client as win32
+import os
 
 # app title
 st.title("Excel Data Processing App")
@@ -9,9 +11,26 @@ st.title("Excel Data Processing App")
 # File upload
 uploaded_file = st.file_uploader("Upload your Excel file (data.xlsx)", type=["xlsx"])
 
+
 if uploaded_file is not None:
+        
+    def repair_excel(file_path):
+        excel = win32.gencache.EnsureDispatch('Excel.Application')
+        excel.Visible = False
+        wb = excel.Workbooks.Open(file_path)
+        
+        # Save as new xlsx file
+        new_path = os.path.splitext(file_path)[0] + "_repaired.xlsx"
+        wb.SaveAs(new_path, FileFormat=51)  # 51 = xlsx format
+        wb.Close()
+        excel.Quit()
+        return new_path
+    
+   
+    new_file = repair_excel("broken_old_excel.xls")
+        
     # Read the Excel file, skipping the first row
-    df = pd.read_excel(uploaded_file, skiprows=1)
+    df = pd.read_excel(new_file, skiprows=1)
 
     # Data processing 
     df1 = df.iloc[:, 6:]
