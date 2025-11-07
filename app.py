@@ -13,23 +13,9 @@ uploaded_file = st.file_uploader("Upload your Excel file (data.xlsx)", type=["xl
 
 
 if uploaded_file is not None:
-
-    def repair_xlsx(file_path):
-        try:
-           wb = openpyxl.load_workbook(file_path, data_only=True, keep_links=False)
-           new_path = file_path.replace('.xlsx', '_repaired.xlsx')
-           wb.save(new_path)
-           return new_path
-        except Exception as e:
-           print("Repair failed:", e)
-           return None
-
-    
-   
-    new_file = repair_xlsx(uploaded_file)
         
     # Read the Excel file, skipping the first row
-    df = pd.read_excel(new_file, skiprows=1)
+    df = pd.read_excel(uploaded_file, skiprows=1)
 
     # Data processing 
     df1 = df.iloc[:, 6:]
