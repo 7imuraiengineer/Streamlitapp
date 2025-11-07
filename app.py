@@ -20,7 +20,7 @@ if uploaded_file is not None:
            new_path = file_path.replace('.xlsx', '_repaired.xlsx')
            wb.save(new_path)
            return new_path
-         except Exception as e:
+        except Exception as e:
            print("Repair failed:", e)
            return None
 
