@@ -3,6 +3,7 @@ import pandas as pd
 from datetime import date, timedelta
 import io
 import openpyxl
+from zoneinfo import ZoneInfo
 
 
 # app title
@@ -67,9 +68,14 @@ if uploaded_file is not None:
     st.dataframe(filtered_df)
 
     # Generate Excel file for download
-    current_date = date.today()
+        
+    # current_date = date.today()
+    # yesterday = current_date - timedelta(days=1)
+    # file_name = f'new_data_{yesterday}.xlsx'
+    current_date = datetime.now(ZoneInfo("Asia/Seoul")).date()
     yesterday = current_date - timedelta(days=1)
-    file_name = f'new_data_{yesterday}.xlsx'
+    file_name = f"new_data_{yesterday}.xlsx"
+
 
     # Create a buffer to store the Excel file
     buffer = io.BytesIO()
