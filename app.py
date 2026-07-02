@@ -96,3 +96,6 @@ if uploaded_file is not None:
     st.write(f"Total 위탁량: {filtered_df['위탁량'].sum():,.2f}")
 else:
     st.info("Please upload an Excel file to start processing.")
+
+
+st.write("VERSION: July 2, 2026, 10:15 AM")
